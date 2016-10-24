@@ -6,6 +6,7 @@
     "start": "nodemon api/index.js --watch api --exec babel-node",
     "lint": "eslint api migrations seeds",
     "test": "mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && npm run lint",
+    "testing": "nodemon api/index.js --watch api --exec \"mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && babel-node\" ",
     "seed": "knex seed:run",
     "migrate": "knex migrate:latest"
   },
@@ -40,8 +41,8 @@
     "nodemon": "1.11.0"
   },
   "dependencies": {
-    "apollo-server": "0.3.3",
     "body-parser": "1.15.2",
+    "casual": "^1.5.6",
     "connect-session-knex": "1.2.0",
     "dataloader": "1.2.0",
     "dotenv": "2.0.0",
@@ -49,8 +50,8 @@
     "express-session": "1.14.1",
     "graphql": "0.7.2",
     "graphql-subscriptions": "0.2.0",
-    "graphql-tools": "0.7.2",
-    "knex": "0.12.6",
+    "graphql-server-express": "^0.4.1",
+    "graphql-tools": "0.8.0",
     "lodash": "4.16.4",
     "passport": "0.3.2",
     "passport-github": "1.1.0",

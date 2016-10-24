@@ -1,5 +1,6 @@
 node_modules
 .DS_Store
-dev.sqlite3
 .env
 .idea/
+dev.sqlite3
+npm-debug.log

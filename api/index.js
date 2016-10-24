@@ -1,21 +1,13 @@
 import path from 'path';
 import express from 'express';
-import { apolloExpress, graphiqlExpress } from 'apollo-server';
+import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 
-import {
-  GITHUB_CLIENT_ID,
-  GITHUB_CLIENT_SECRET,
-} from './githubKeys';
+import { Messages, Threads, Users } from './chat/models';
 
-import { setUpGitHubLogin } from './githubLogin';
-import { GitHubConnector } from './github/connector';
-import { Repositories, Users } from './github/models';
-import { Entries, Comments } from './sql/models';
-
-import { createServer } from 'http';
-import { SubscriptionServer } from 'subscriptions-transport-ws';
-import { subscriptionManager } from './subscriptions';
+// import { createServer } from 'http';
+// import { SubscriptionServer } from 'subscriptions-transport-ws';
+// import { subscriptionManager } from './subscriptions';
 
 import schema from './schema';
 
@@ -31,9 +23,9 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-setUpGitHubLogin(app);
+// setUpGitHubLogin(app);
 
-app.use('/graphql', apolloExpress((req) => {
+app.use('/graphql', graphqlExpress((req) => {
   // Get the query, the same way express-graphql does it
   // https://github.com/graphql/express-graphql/blob/3fa6e68582d6d933d37fa9e841da5d2aa39261cd/src/index.js#L257
   const query = req.query.query || req.body.query;
@@ -43,50 +35,38 @@ app.use('/graphql', apolloExpress((req) => {
     throw new Error('Query too large.');
   }
 
-  let user;
-  if (req.user) {
-    // We get req.user from passport-github with some pretty oddly named fields,
-    // let's convert that to the fields in our schema, which match the GitHub
-    // API field names.
-    user = {
-      login: req.user.username,
-      html_url: req.user.profileUrl,
-      avatar_url: req.user.photos[0].value,
-    };
-  }
-
-  // Initialize a new GitHub connector instance for every GraphQL request, so that API fetches
-  // are deduplicated per-request only.
-  const gitHubConnector = new GitHubConnector({
-    clientId: GITHUB_CLIENT_ID,
-    clientSecret: GITHUB_CLIENT_SECRET,
-  });
-
   return {
     schema,
     context: {
-      user,
-      Repositories: new Repositories({ connector: gitHubConnector }),
-      Users: new Users({ connector: gitHubConnector }),
-      Entries: new Entries(),
-      Comments: new Comments(),
+      Users: new Users({ login: 'ramy' }),
+      Messages: new Messages(),
+      Threads: new Threads(),
     },
   };
 }));
 
+
 app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
   query: `{
-  feed (type: NEW, limit: 5) {
-    repository {
-      owner { login }
+  user {
+    login
+    firstName
+    lastName
+    threads {
+      id
       name
+      isRead
+      lastUpdated
+      messages {
+        id
+        postedBy
+        content
+        createdAt
+      }
     }
-
-    postedBy { login }
   }
-}
-`,
+}`,
 }));
 
 // Serve our helpful static landing page. Not used in production.
@@ -98,6 +78,7 @@ app.listen(PORT, () => console.log( // eslint-disable-line no-console
   `API Server is now running on http://localhost:${PORT}`
 ));
 
+/*
 // WebSocket server for subscriptions
 const websocketServer = createServer((request, response) => {
   response.writeHead(404);
@@ -107,7 +88,6 @@ const websocketServer = createServer((request, response) => {
 websocketServer.listen(WS_PORT, () => console.log( // eslint-disable-line no-console
   `Websocket Server is now running on http://localhost:${WS_PORT}`
 ));
-
 // eslint-disable-next-line
 new SubscriptionServer(
   {
@@ -132,3 +112,4 @@ new SubscriptionServer(
   },
   websocketServer
 );
+*/
