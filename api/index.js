@@ -3,7 +3,7 @@ import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 
-import { Messages, Threads, Users } from './chat/models';
+import { Messages, Threads, Users } from './query/models';
 
 // import { createServer } from 'http';
 // import { SubscriptionServer } from 'subscriptions-transport-ws';

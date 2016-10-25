@@ -1,5 +1,5 @@
 import { merge } from 'lodash';
-import { schema as chatSchema, resolvers as chatResolvers } from './chat/schema';
+import { schema as querySchema, resolvers as queryResolvers } from './query/schema';
 import { makeExecutableSchema } from 'graphql-tools';
 
 const rootSchema = [`
@@ -25,8 +25,8 @@ const rootResolvers = {
 
 // Put schema together into one array of schema strings
 // and one map of resolvers, like makeExecutableSchema expects
-const schema = [...rootSchema, ...chatSchema];
-const resolvers = merge(rootResolvers, chatResolvers);
+const schema = [...rootSchema, ...querySchema];
+const resolvers = merge(rootResolvers, queryResolvers);
 
 const executableSchema = makeExecutableSchema({
   typeDefs: schema,
