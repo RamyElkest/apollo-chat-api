@@ -16,7 +16,7 @@ if (process.env.PORT) {
   PORT = parseInt(process.env.PORT, 10) + 100;
 }
 
-const WS_PORT = process.env.WS_PORT || 8080;
+// const WS_PORT = process.env.WS_PORT || 8080;
 
 const app = express();
 

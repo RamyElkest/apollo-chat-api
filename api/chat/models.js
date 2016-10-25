@@ -79,7 +79,7 @@ export class Messages {
   }
 }
 export class Threads {
-  getByLogin(login) {
+  getByLogin() {
     return Promise.resolve().then(() => threads);
   }
 }

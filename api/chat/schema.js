@@ -1,5 +1,3 @@
-import { property, constant } from 'lodash';
-
 export const schema = [`
 
 # A user

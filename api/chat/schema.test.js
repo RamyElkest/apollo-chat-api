@@ -7,7 +7,6 @@ import casual from 'casual';
 import mocks from './mocks';
 
 describe('Chat Query Schema', () => {
-
   // Fill this in with the schema string
   const schemaString = `
   ${schemaArray[0]}
@@ -21,19 +20,19 @@ describe('Chat Query Schema', () => {
   }`;
 
   // Make a GraphQL schema with no resolvers
-  const schema = makeExecutableSchema({typeDefs: schemaString});
+  const schema = makeExecutableSchema({ typeDefs: schemaString });
 
   // Add mocks, modifies schema in place
   addMockFunctionsToSchema({ schema, mocks, preserveResolvers: false });
 
-  before(function() {
+  before(() => {
     casual.seed();
   });
 
   it('throws an error pass an empty query', () => {
-    const testQuery = `{}`;
+    const testQuery = '{}';
 
-    return graphql(schema, testQuery).then(result => {
+    return graphql(schema, testQuery).then((result) => {
       assert.notEqual(result.errors.length, 0);
     });
   });
@@ -47,15 +46,15 @@ describe('Chat Query Schema', () => {
         lastName
       }
     }`;
-    const expected = 
-    {
-      "login": "Larry_Raynor",
-      "firstName": "Rosalind",
-      "lastName": "Mertz",
-    };
+    const expected =
+      {
+        login: 'Larry_Raynor',
+        firstName: 'Rosalind',
+        lastName: 'Mertz',
+      };
 
-    return graphql(schema, testQuery).then(result => {
-      assert.deepEqual(result.data.user, expected)
+    return graphql(schema, testQuery).then((result) => {
+      assert.deepEqual(result.data.user, expected);
     });
   });
 
@@ -71,16 +70,16 @@ describe('Chat Query Schema', () => {
         }
       }
     }`;
-    const expected = 
-    {
-      id: "858",
-      isRead: true,
-      name: "perspiciatis nulla",
-      lastUpdated: 624,
-    };
+    const expected =
+      {
+        id: '858',
+        isRead: true,
+        name: 'perspiciatis nulla',
+        lastUpdated: 624,
+      };
 
-    return graphql(schema, testQuery).then(result => {
-      assert.deepEqual(result.data.user.threads[0], expected)
+    return graphql(schema, testQuery).then((result) => {
+      assert.deepEqual(result.data.user.threads[0], expected);
     });
   });
 
@@ -98,16 +97,16 @@ describe('Chat Query Schema', () => {
         }
       }
     }`;
-    const expected = 
-    {
-      id: "57",
-      postedBy: "Glover_Gerald",
-      content: "voluptatum temporibus consequatur",
-      createdAt: 529
-    };
+    const expected =
+      {
+        id: '57',
+        postedBy: 'Glover_Gerald',
+        content: 'voluptatum temporibus consequatur',
+        createdAt: 529,
+      };
 
-    return graphql(schema, testQuery).then(result => {
-      assert.deepEqual(result.data.user.threads[0].messages[0], expected)
+    return graphql(schema, testQuery).then((result) => {
+      assert.deepEqual(result.data.user.threads[0].messages[0], expected);
     });
   });
 });
