@@ -1,28 +1,13 @@
 import express from 'express';
-import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github';
-import knex from './sql/connector';
 
 import {
   GITHUB_CLIENT_ID,
   GITHUB_CLIENT_SECRET,
 } from './githubKeys';
 
-const KnexSessionStore = require('connect-session-knex')(session);
-
-const store = new KnexSessionStore({
-  knex,
-});
-
 export function setUpGitHubLogin(app) {
-  app.use(session({
-    secret: 'your secret',
-    resave: true,
-    saveUninitialized: true,
-    store,
-  }));
-
   app.use(passport.initialize());
   app.use(passport.session());
 
