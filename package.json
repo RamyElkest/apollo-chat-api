@@ -6,7 +6,7 @@
     "start": "nodemon api/index.js --watch api --exec babel-node",
     "lint": "eslint api migrations seeds",
     "test": "mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && npm run lint",
-    "testing": "nodemon api/index.js --watch api --exec \"mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && babel-node\" ",
+    "continuous": "nodemon api/index.js --watch api --exec \"mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && babel-node\" ",
     "seed": "knex seed:run",
     "migrate": "knex migrate:latest"
   },
