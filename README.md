@@ -3,8 +3,8 @@
 [![Dependency Status](https://david-dm.org/ramyelkest/apollo-chat-api.svg)](https://david-dm.org/ramyelkest/apollo-chat-api)
 [![devDependency Status](https://david-dm.org/ramyelkest/apollo-chat-api/dev-status.svg)](https://david-dm.org/ramyelkest/apollo-chat-api#info=devDependencies)
 
-https://david-dm.org/ramyelkest/apollo-chat-api.svg
 # Under construction
+Apollo Chat API is a Chat server based on [Githunt-API](https://github.com/apollostack/GitHunt-API.git) and [relay-chat](https://github.com/transedward/relay-chat.git)
 
 **Run the app.**
 
@@ -13,3 +13,16 @@ https://david-dm.org/ramyelkest/apollo-chat-api.svg
   ```
 
 **Open the app.** Open http://localhost:3010/ to see what to do next.
+
+
+** test the app.**
+
+  ```
+  npm test
+  ```
+
+** continously run app (tests, lints and serves).**
+
+  ```
+  npm run continuous
+  ```
