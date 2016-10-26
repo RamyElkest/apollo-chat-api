@@ -70,6 +70,7 @@ const threads = [
     lastUpdated: Date.now() - 39999,
   },
 ];
+let m_id = 7;
 
 export class Messages {
   getByThreadId(threadId) {
@@ -77,10 +78,32 @@ export class Messages {
                   .then(() => messages.filter(x => x.threadId === threadId)
                                       .sort((x, y) => x.createdAt - y.createdAt));
   }
+
+  addMessage({ threadId, postedBy, content }) {
+    m_id += 1;
+    messages.push({
+      id: `m_${m_id}`,
+      threadId,
+      postedBy,
+      content,
+      createdAt: Date.now(),
+    });
+
+    return messages[messages.length - 1];
+  }
 }
 export class Threads {
   getByLogin() {
     return Promise.resolve().then(() => threads);
+  }
+
+  getById(id) {
+    return Promise.resolve.then(() => threads.filter(x => x.id === id))
+                          .then((thread) => {
+                            if (thread.length === 0) throw new Error(`Couldn't find a thread with id "${id}"`);
+                            else if (thread.length > 1) throw new Error(`found multiple threads with id "${id}"`);
+                            else return thread[0];
+                          });
   }
 }
 export class Users {
