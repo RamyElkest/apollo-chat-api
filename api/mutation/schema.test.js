@@ -36,7 +36,7 @@ describe('Chat Mutation Schema', () => {
     });
   });
 
-  describe('addMessage mutation', function () {
+  describe('addMessage mutation', () => {
     it('returns all message scalar fields', () => {
       const testMutation = `
       mutation example {
@@ -53,10 +53,10 @@ describe('Chat Mutation Schema', () => {
       }`;
       const expected =
         {
-          id: "549",
-         "content": "animi vero perspiciatis",
-         "postedBy": "Michale_Sporer",
-         "createdAt": 847,
+          id: '549',
+          content: 'animi vero perspiciatis',
+          postedBy: 'Michale_Sporer',
+          createdAt: 847,
         };
 
       return graphql(schema, testMutation).then((result) => {
@@ -65,7 +65,7 @@ describe('Chat Mutation Schema', () => {
     });
   });
 
-  describe('markThreadAsRead mutation', function () {
+  describe('markThreadAsRead mutation', () => {
     it('returns all thread scalar fields', () => {
       const testMutation = `
       mutation example {
@@ -75,13 +75,13 @@ describe('Chat Mutation Schema', () => {
         isRead
         lastUpdated
        }
-      }`; 
+      }`;
       const expected =
         {
-         "id": "424",
-         "isRead": true,
-         "lastUpdated": 438,
-         "name": "fuga facilis",
+          id: '424',
+          isRead: true,
+          lastUpdated: 438,
+          name: 'fuga facilis',
         };
 
       return graphql(schema, testMutation).then((result) => {
