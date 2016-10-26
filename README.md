@@ -15,13 +15,13 @@ Apollo Chat API is a Chat server based on [Githunt-API](https://github.com/apoll
 **Open the app.** Open http://localhost:3010/ to see what to do next.
 
 
-** test the app.**
+**Test the app.**
 
   ```
   npm test
   ```
 
-** continously run app (tests, lints and serves).**
+**Continously run app (tests, lints and serves).**
 
   ```
   npm run continuous
