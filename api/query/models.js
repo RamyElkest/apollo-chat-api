@@ -98,12 +98,22 @@ export class Threads {
   }
 
   getById(id) {
-    return Promise.resolve.then(() => threads.filter(x => x.id === id))
-                          .then((thread) => {
-                            if (thread.length === 0) throw new Error(`Couldn't find a thread with id "${id}"`);
-                            else if (thread.length > 1) throw new Error(`found multiple threads with id "${id}"`);
-                            else return thread[0];
-                          });
+    return Promise.resolve().then(() => threads.filter(x => x.id === id))
+                            .then((thread) => {
+                              if (thread.length === 0) throw new Error(`Couldn't find a thread with id "${id}"`);
+                              else if (thread.length > 1) throw new Error(`found multiple threads with id "${id}"`);
+                              else return thread[0];
+                            });
+  }
+
+
+  /* TODO */
+  /* eslint no-param-reassign: ["error", { "props": false }]*/
+  markAsRead(id) {
+    return this.getById(id).then((thread) => {
+      thread.isRead = true;
+      return thread;
+    });
   }
 }
 export class Users {

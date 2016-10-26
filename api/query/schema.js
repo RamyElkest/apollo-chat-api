@@ -1,5 +1,4 @@
 export const schema = [`
-
 # A user
 type User {
   # The name of the user, e.g. ramyelkest
@@ -48,7 +47,10 @@ type Message {
   createdAt: Float! # Actually a date
 }
 
-
+type Query {
+  # Return the currently logged in user, or null if nobody is logged in
+  user: User
+}
 `];
 
 
@@ -61,6 +63,11 @@ export const resolvers = {
   User: {
     threads({ login }, _, context) {
       return context.Threads.getByLogin(login);
+    },
+  },
+  Query: {
+    user(root, args, context) {
+      return context.Users;
     },
   },
 };

@@ -38,7 +38,7 @@ app.use('/graphql', graphqlExpress((req) => {
   return {
     schema,
     context: {
-      Users: new Users({ login: 'ramy' }),
+      User: new Users({ login: 'ramy' }),
       Messages: new Messages(),
       Threads: new Threads(),
     },

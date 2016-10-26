@@ -11,10 +11,6 @@ describe('Chat Query Schema', () => {
   const schemaString = `
   ${schemaArray[0]}
 
-  type Query {
-    user: User
-  }
-
   schema {
     query: Query
   }`;
@@ -83,7 +79,7 @@ describe('Chat Query Schema', () => {
     });
   });
 
-  it('returns all message fields', () => {
+  it('returns all message scalar fields', () => {
     const testQuery = `
     {
       user {
