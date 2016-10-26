@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
   login: String,
   firstName: String,
   lastName: String,
-  threads: []
+  threads: [],
 }, {
   timestamps: true,
 });
