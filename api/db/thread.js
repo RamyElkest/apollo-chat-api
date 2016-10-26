@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const threadSchema = new mongoose.Schema({
   name: String,
-  isRead: Boolean,
-  messages: []
+  readBy: [],
+  threadId: String
 }, {
   timestamps: true
 });
 
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('Thread', threadSchema);
