@@ -1,26 +1,25 @@
 {
-  "name": "githunt-api",
-  "version": "1.0.0",
-  "description": "Example app for Apollo",
+  "name": "apollo-chat-api",
+  "version": "0.1.0",
+  "description": "Chat app built with Apollo",
   "scripts": {
     "start": "nodemon api/index.js --watch api --exec babel-node",
     "lint": "eslint api migrations seeds",
     "test": "mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && npm run lint",
     "continuous": "nodemon api/index.js --watch api --exec \"mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && babel-node\" ",
-    "seed": "knex seed:run",
-    "migrate": "knex migrate:latest"
+    "seed": "knex seed:run"
   },
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apollostack/GitHunt.git"
+    "url": "git+https://github.com/RamyElkest/apollo-chat-api.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/apollostack/GitHunt/issues"
+    "url": "https://github.com/RamyElkest/apollo-chat-api/issues"
   },
-  "homepage": "https://github.com/apollostack/GitHunt#readme",
+  "homepage": "https://github.com/RamyElkest/apollo-chat-api#readme",
   "devDependencies": {
     "babel-cli": "6.16.0",
     "babel-core": "6.17.0",
@@ -43,7 +42,6 @@
   "dependencies": {
     "body-parser": "1.15.2",
     "casual": "^1.5.6",
-    "connect-session-knex": "1.2.0",
     "dataloader": "1.2.0",
     "dotenv": "2.0.0",
     "express": "4.14.0",
@@ -53,12 +51,10 @@
     "graphql-subscriptions": "0.2.0",
     "graphql-tools": "0.8.0",
     "lodash": "4.16.4",
-    "mongodb": "^2.2.11",
     "mongoose": "^4.6.5",
     "passport": "0.3.2",
     "passport-github": "1.1.0",
     "request-promise": "4.1.1",
-    "sqlite3": "3.1.6",
     "subscriptions-transport-ws": "0.2.6"
   }
 }
