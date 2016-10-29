@@ -1,3 +1,5 @@
+import '../db/mongo';
+
 // Mock raw message data then we can transform
 const messages = [
   {

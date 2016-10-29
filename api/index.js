@@ -3,6 +3,7 @@ import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 
+import config from '../config';
 import { Messages, Threads, Users } from './query/models';
 
 // import { createServer } from 'http';
@@ -11,7 +12,7 @@ import { Messages, Threads, Users } from './query/models';
 
 import schema from './schema';
 
-let PORT = 3010;
+let PORT = config.port;
 if (process.env.PORT) {
   PORT = parseInt(process.env.PORT, 10) + 100;
 }
@@ -74,9 +75,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(PORT, () => console.log( // eslint-disable-line no-console
-  `API Server is now running on http://localhost:${PORT}`
-));
+app.listen(PORT, () => console.log(`API Server is now running on http://localhost:${PORT}`));
 
 /*
 // WebSocket server for subscriptions
