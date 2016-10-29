@@ -4,3 +4,4 @@ node_modules
 .idea/
 dev.sqlite3
 npm-debug.log
+coverage/

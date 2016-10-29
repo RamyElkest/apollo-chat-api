@@ -8,7 +8,8 @@
     "lint": "eslint api migrations seeds",
     "test": "NODE_ENV=test mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && npm run lint",
     "continuous": "NODE_ENV=development nodemon api/index.js --watch api --exec \"npm test && babel-node\" ",
-    "seed": "NODE_ENV=development babel-node seeds/seeds.js"
+    "seed": "NODE_ENV=development babel-node seeds/seeds.js",
+    "coveralls": "NODE_ENV=development babel-istanbul cover _mocha --report lcovonly api/**/*.test.js && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   },
   "private": true,
   "repository": {
@@ -25,12 +26,14 @@
     "babel-cli": "6.16.0",
     "babel-core": "6.17.0",
     "babel-eslint": "7.0.0",
+    "babel-istanbul": "^0.11.0",
     "babel-loader": "6.2.5",
     "babel-preset-es2015": "6.16.0",
     "babel-preset-react": "6.16.0",
     "babel-preset-stage-2": "6.17.0",
     "babel-register": "6.16.3",
     "chai": "3.5.0",
+    "coveralls": "^2.11.14",
     "eslint": "3.8.1",
     "eslint-config-airbnb": "12.0.0",
     "eslint-plugin-babel": "3.3.0",
@@ -53,6 +56,7 @@
     "graphql-tools": "0.8.0",
     "is-mongodb-running": "0.0.1",
     "lodash": "4.16.4",
+    "mocha-lcov-reporter": "^1.2.0",
     "mongodb-runner": "^3.4.0",
     "mongoose": "^4.6.5",
     "passport": "0.3.2",
