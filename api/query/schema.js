@@ -2,7 +2,7 @@ export const schema = [`
 # A user
 type User {
   # The name of the user, e.g. ramyelkest
-  login: String!
+  username: String!
 
   # first name
   firstName: String
@@ -29,7 +29,7 @@ type Thread {
   messages: [Message]
 
   # A timestamp of when the thread was last updated
-  lastUpdated: Float! # Actually a date
+  updatedAt: Float! # Actually a date
 }
 
 # A message, attached to a thread
@@ -37,7 +37,7 @@ type Message {
   # The ID of this message
   id: String!
 
-  # User that posted the message
+  # User id that posted the message
   postedBy: String!
 
   # The text of the comment
@@ -48,8 +48,8 @@ type Message {
 }
 
 type Query {
-  # Return the currently logged in user, or null if nobody is logged in
-  user: User
+  # Return the currently logged in user
+  user: User!
 }
 `];
 
@@ -59,15 +59,18 @@ export const resolvers = {
     messages({ id }, _, context) {
       return context.Messages.getByThreadId(id);
     },
+    isRead() {
+      return false;
+    },
   },
   User: {
-    threads({ login }, _, context) {
-      return context.Threads.getByLogin(login);
+    threads({ threads }, _, context) {
+      return context.Threads.getByIds(threads);
     },
   },
   Query: {
-    user(root, args, context) {
-      return context.Users;
+    user(root, _, context) {
+      return context.Users.current;
     },
   },
 };

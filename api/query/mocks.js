@@ -3,7 +3,7 @@ import { MockList } from 'graphql-tools';
 
 const mocks = {
   User: () => ({
-    login: () => casual.username,
+    username: () => casual.username,
     firstName: () => casual.first_name,
     lastName: () => casual.last_name,
     threads: () => new MockList(2, mocks.Thread),
@@ -13,7 +13,7 @@ const mocks = {
     name: () => casual.words(2),
     isRead: () => casual.coin_flip,
     messages: () => new MockList(2, mocks.Message),
-    lastUpdated: () => casual.integer(0),
+    updatedAt: () => casual.integer(0),
   }),
   Message: () => ({
     id: () => casual.integer(0),

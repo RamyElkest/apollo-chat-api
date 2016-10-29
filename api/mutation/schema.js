@@ -30,7 +30,8 @@ export const resolvers = {
       return Promise.resolve()
         .then(() => context.Threads.getById(id))
         .then(() => (
-          context.Messages.addMessage({ threadId: id, postedBy: context.User.login, content })
+          context.Messages
+                 .addMessage({ threadId: id, postedBy: context.User.current.username, content })
         ));
     },
 
@@ -42,7 +43,7 @@ export const resolvers = {
       return Promise.resolve()
         .then(() => context.Threads.getById(id))
         .then(() => (
-          context.Threads.markAsRead({ id, username: context.User.login })
+          context.Threads.markAsRead({ id, username: context.User.current.username })
         ));
     },
   },

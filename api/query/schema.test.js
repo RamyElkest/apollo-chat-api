@@ -37,14 +37,14 @@ describe('Chat Query Schema', () => {
     const testQuery = `
     {
       user {
-        login
+        username
         firstName
         lastName
       }
     }`;
     const expected =
       {
-        login: 'Larry_Raynor',
+        username: 'Larry_Raynor',
         firstName: 'Rosalind',
         lastName: 'Mertz',
       };
@@ -62,7 +62,7 @@ describe('Chat Query Schema', () => {
           id
           name
           isRead
-          lastUpdated
+          updatedAt
         }
       }
     }`;
@@ -71,7 +71,7 @@ describe('Chat Query Schema', () => {
         id: '858',
         isRead: true,
         name: 'perspiciatis nulla',
-        lastUpdated: 624,
+        updatedAt: 624,
       };
 
     return graphql(schema, testQuery).then((result) => {

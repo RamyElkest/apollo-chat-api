@@ -8,5 +8,8 @@ const messageSchema = new mongoose.Schema({
   timestamps: true,
 });
 
+messageSchema.statics.getByThreadId = function getByThreadId(id) {
+  return this.find({ threadId: id }).exec();
+};
 
 export default mongoose.model('Message', messageSchema);

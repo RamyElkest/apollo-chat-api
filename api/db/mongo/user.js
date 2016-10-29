@@ -10,5 +10,8 @@ const userSchema = new mongoose.Schema({
 },
 );
 
+userSchema.statics.getUser = function getUser() {
+  return this.findOne();
+};
 
 export default mongoose.model('User', userSchema);

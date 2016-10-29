@@ -73,14 +73,14 @@ describe('Chat Mutation Schema', () => {
         id
         name
         isRead
-        lastUpdated
+        updatedAt
        }
       }`;
       const expected =
         {
           id: '424',
           isRead: true,
-          lastUpdated: 438,
+          updatedAt: 438,
           name: 'fuga facilis',
         };
 

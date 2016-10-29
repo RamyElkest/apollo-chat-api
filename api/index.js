@@ -4,7 +4,7 @@ import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 
 import config from '../config';
-import { Messages, Threads, Users } from './query/models';
+import { Users, Threads, Messages } from './models';
 
 // import { createServer } from 'http';
 // import { SubscriptionServer } from 'subscriptions-transport-ws';
@@ -39,7 +39,7 @@ app.use('/graphql', graphqlExpress((req) => {
   return {
     schema,
     context: {
-      User: new Users({ login: 'ramy' }),
+      Users: new Users(),
       Messages: new Messages(),
       Threads: new Threads(),
     },
@@ -51,16 +51,14 @@ app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
   query: `{
   user {
-    login
+    username
     firstName
     lastName
     threads {
-      id
       name
       isRead
-      lastUpdated
+      updatedAt
       messages {
-        id
         postedBy
         content
         createdAt
