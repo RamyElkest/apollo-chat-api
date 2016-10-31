@@ -1,7 +1,4 @@
 /* eslint new-cap:0, no-underscore-dangle: 0 */
-
-require('babel-register');
-
 import mongoose from 'mongoose';
 import { Connection, User, Thread, Message } from '../api/db/mongo';
 

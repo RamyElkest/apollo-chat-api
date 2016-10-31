@@ -7,7 +7,7 @@ import isMongoRunning from 'is-mongodb-running';
 import mongoRunner from 'mongodb-runner';
 import mongoose from 'mongoose';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
   mongoose.set('debug', true);
 }
 mongoose.Promise = global.Promise;
