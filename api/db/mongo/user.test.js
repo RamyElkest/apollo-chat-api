@@ -46,6 +46,24 @@ describe('User database model', () => {
     });
   });
 
+  it('should get logged in user', () => {
+    return new User({
+      username: 'test',
+      firstName: 'testFirst',
+      lastName: 'testLast',
+    })
+    .save()
+    .then(() => {
+      return User.getUser()
+      .then((doc) => {
+        assert.isObject(doc);
+        assert.equal(doc.username, 'test');
+        assert.equal(doc.firstName, 'testFirst');
+        assert.equal(doc.lastName, 'testLast');
+      });
+    });
+  });
+
   it('should find a user in the database', () => {
     return new User({
       username: 'test',
@@ -54,9 +72,9 @@ describe('User database model', () => {
     })
     .save()
     .then(() => {
-      User.find({ username: 'test' }).exec()
+      return User.find({ username: 'test' }).exec()
       .then((doc) => {
-        assert.equal(doc.lengh, 1);
+        assert.equal(doc.length, 1);
       });
     });
   });
