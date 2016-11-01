@@ -4,11 +4,14 @@ import { assert } from 'chai';
 import { Connection, User } from '..';
 
 
-describe('user models the database', () => {
-  before((done) => {
-    Connection.then(() => {
-      User.remove({}, done);
-    });
+describe('User database model', () => {
+  before(function () {
+    this.timeout(10000); // might have to wait for the db to start
+    return Connection;
+  });
+
+  beforeEach(() => {
+    return User.remove({});
   });
 
   it('should contain no users', () => {
@@ -46,19 +49,42 @@ describe('user models the database', () => {
     });
   });
 
+  it('should find a user in the database', () => {
+    return new User({
+      username: 'test',
+      firstName: 'testFirst',
+      lastName: 'testLast',
+    })
+    .save()
+    .then(() => {
+      User.find({ username: 'test' }).exec()
+      .then((doc) => {
+        assert.equal(doc.lengh, 1);
+      });
+    });
+  });
+
   it('should remove user from the database', () => {
-    return User.remove({ username: 'test' })
-    .then((doc) => {
-      assert.equal(doc.result.ok, 1);
+    return new User({
+      username: 'test',
+      firstName: 'testFirst',
+      lastName: 'testLast',
+    })
+    .save()
+    .then(() => {
+      return User.remove({ username: 'test' })
+      .then((doc) => {
+        assert.equal(doc.result.n, 1);
+      });
     })
     .then(() => {
       User.find().exec()
-          .catch(() => {
-            assert.ok(false);
-          })
-          .then((doc) => {
-            assert.equal(doc.length, 0);
-          });
+      .catch(() => {
+        assert.ok(false);
+      })
+      .then((doc) => {
+        assert.equal(doc.length, 0);
+      });
     });
   });
 });

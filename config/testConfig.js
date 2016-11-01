@@ -1,8 +1,8 @@
 export default {
-  port: 3011,
+  port: 3010,
   mongo: {
-  	port: 27018,
-    uri: 'mongodb://localhost:27018/aca-test',
+    port: 27017,
+    uri: 'mongodb://localhost:27017/aca-test',
     options: {},
   },
 }

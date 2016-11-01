@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const messageSchema = new mongoose.Schema({
-  postedBy: String,
-  content: String,
-  threadId: { type: String, index: true },
+  threadId: { type: String, required: true, index: true },
+  content: { type: String, required: true },
+  postedBy: { type: String, required: true },
 }, {
   timestamps: true,
 });
