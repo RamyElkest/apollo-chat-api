@@ -43,15 +43,15 @@ describe('Thread database model', () => {
     .then((doc) => {
       return doc.id;
     })
-    .then(() => {
-      Thread.getById('N/A').then((doc) => {
-        assert.notOk(doc);
+    .then((id) => {
+      return Thread.getById(id).then((doc) => {
+        assert.isObject(doc);
+        assert.equal(doc.name, 'test');
       });
     })
-    .then((id) => {
-      Thread.getById(id).then((doc) => {
-        assert.equal(doc.length, 1);
-        assert.equal(doc[0].name, 'test');
+    .then(() => {
+      return Thread.getById('000000000000000000000000').then((doc) => {
+        assert.notOk(doc);
       });
     });
   });
@@ -73,20 +73,20 @@ describe('Thread database model', () => {
       }).save().then((doc) => ids.push(doc.id)),
     ])
     .then(() => {
-      assert(ids.length, 3);
+      assert.equal(ids.length, 3);
     })
     .then(() => {
-      Thread.getByIds([]).then((doc) => {
+      return Thread.getByIds([]).then((doc) => {
         assert.equal(doc.length, 0);
       });
     })
     .then(() => {
-      Thread.getByIds([ids[0]]).then((doc) => {
+      return Thread.getByIds([ids[0]]).then((doc) => {
         assert.equal(doc.length, 1);
       });
     })
     .then(() => {
-      Thread.getByIds(ids).then((doc) => {
+      return Thread.getByIds(ids).then((doc) => {
         assert.equal(doc.length, 3);
       });
     });

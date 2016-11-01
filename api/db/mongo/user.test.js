@@ -16,9 +16,6 @@ describe('User database model', () => {
 
   it('should contain no users', () => {
     return User.find().exec()
-    .catch(() => {
-      assert.ok(false);
-    })
     .then((doc) => {
       assert.equal(doc.length, 0);
     });
@@ -78,10 +75,7 @@ describe('User database model', () => {
       });
     })
     .then(() => {
-      User.find().exec()
-      .catch(() => {
-        assert.ok(false);
-      })
+      return User.find().exec()
       .then((doc) => {
         assert.equal(doc.length, 0);
       });

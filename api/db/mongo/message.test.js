@@ -16,9 +16,6 @@ describe('Message database model', () => {
 
   it('should contain no messages', () => {
     return Message.find().exec()
-    .catch(() => {
-      assert.ok(false);
-    })
     .then((doc) => {
       assert.equal(doc.length, 0);
     });
@@ -76,14 +73,14 @@ describe('Message database model', () => {
       });
     })
     .then(() => {
-      Message.getByThreadId('t_1').then((doc) => {
+      return Message.getByThreadId('t_1').then((doc) => {
         assert.equal(doc.length, 2);
         assert.equal(doc[0].threadId, 't_1');
         assert.equal(doc[1].threadId, 't_1');
       });
     })
     .then(() => {
-      Message.getByThreadId('t_2').then((doc) => {
+      return Message.getByThreadId('t_2').then((doc) => {
         assert.equal(doc.length, 1);
         assert.equal(doc[0].threadId, 't_2');
       });
@@ -105,9 +102,6 @@ describe('Message database model', () => {
     })
     .then(() => {
       return Message.find().exec()
-      .catch(() => {
-        assert.ok(false);
-      })
       .then((doc) => {
         assert.equal(doc.length, 0);
       });

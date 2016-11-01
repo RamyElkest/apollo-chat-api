@@ -8,11 +8,11 @@ const threadSchema = new mongoose.Schema({
 });
 
 threadSchema.statics.getById = function getById(id) {
-  return this.findOne({ id }).exec();
+  return this.findOne({ _id: id }).exec();
 };
 
 threadSchema.statics.getByIds = function getByIds(ids) {
-  return this.find({ id: { $in: ids } }).exec();
+  return this.find({ _id: { $in: ids } }).exec();
 };
 
 
