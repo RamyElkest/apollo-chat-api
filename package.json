@@ -1,40 +1,43 @@
 {
-  "name": "githunt-api",
-  "version": "1.0.0",
-  "description": "Example app for Apollo",
+  "name": "apollo-chat-api",
+  "version": "0.1.0",
+  "description": "Chat app built with Apollo",
   "scripts": {
-    "start": "nodemon api/index.js --watch api --exec babel-node",
+    "mongo": "mongodb-runner start --name=dev --purge false",
+    "start": "NODE_ENV=development nodemon api/index.js --watch api --exec babel-node",
     "lint": "eslint api migrations seeds",
-    "test": "mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && npm run lint",
-    "continuous": "nodemon api/index.js --watch api --exec \"mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && babel-node\" ",
-    "seed": "knex seed:run",
-    "migrate": "knex migrate:latest"
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register --reporter spec --full-trace 'api/**/*.test.js' && npm run lint",
+    "continuous": "NODE_ENV=development nodemon api/index.js --watch api --exec \"npm test && babel-node\" ",
+    "seed": "NODE_ENV=development babel-node seeds/seeds.js",
+    "coveralls": "NODE_ENV=test babel-istanbul cover _mocha --report lcovonly 'api/**/*.test.js' && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   },
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apollostack/GitHunt.git"
+    "url": "git+https://github.com/RamyElkest/apollo-chat-api.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/apollostack/GitHunt/issues"
+    "url": "https://github.com/RamyElkest/apollo-chat-api/issues"
   },
-  "homepage": "https://github.com/apollostack/GitHunt#readme",
+  "homepage": "https://github.com/RamyElkest/apollo-chat-api#readme",
   "devDependencies": {
-    "babel-cli": "6.18.0",
-    "babel-core": "6.18.0",
-    "babel-eslint": "7.1.0",
-    "babel-loader": "6.2.7",
-    "babel-preset-es2015": "6.18.0",
+    "babel-cli": "6.16.0",
+    "babel-core": "6.17.0",
+    "babel-eslint": "7.0.0",
+    "babel-istanbul": "^0.11.0",
+    "babel-loader": "6.2.5",
+    "babel-preset-es2015": "6.16.0",
     "babel-preset-react": "6.16.0",
-    "babel-preset-stage-2": "6.18.0",
-    "babel-register": "6.18.0",
+    "babel-preset-stage-2": "6.17.0",
+    "babel-register": "6.16.3",
     "chai": "3.5.0",
+    "coveralls": "^2.11.14",
     "eslint": "3.8.1",
     "eslint-config-airbnb": "12.0.0",
     "eslint-plugin-babel": "3.3.0",
-    "eslint-plugin-import": "2.0.1",
+    "eslint-plugin-import": "1.16.0",
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "6.4.1",
     "mocha": "3.1.2",
@@ -43,7 +46,6 @@
   "dependencies": {
     "body-parser": "1.15.2",
     "casual": "^1.5.6",
-    "connect-session-knex": "1.2.0",
     "dataloader": "1.2.0",
     "dotenv": "2.0.0",
     "express": "4.14.0",
@@ -52,13 +54,14 @@
     "graphql-server-express": "^0.4.1",
     "graphql-subscriptions": "0.2.0",
     "graphql-tools": "0.8.0",
+    "is-mongodb-running": "0.0.1",
     "lodash": "4.16.4",
-    "mongodb": "^2.2.11",
+    "mocha-lcov-reporter": "^1.2.0",
+    "mongodb-runner": "^3.4.0",
     "mongoose": "^4.6.5",
     "passport": "0.3.2",
     "passport-github": "1.1.0",
     "request-promise": "4.1.1",
-    "sqlite3": "3.1.8",
-    "subscriptions-transport-ws": "0.3.0"
+    "subscriptions-transport-ws": "0.2.6"
   }
 }
