@@ -6,25 +6,21 @@ import bodyParser from 'body-parser';
 import config from '../config';
 import { Users, Threads, Messages } from './models';
 
-// import { createServer } from 'http';
-// import { SubscriptionServer } from 'subscriptions-transport-ws';
-// import { subscriptionManager } from './subscriptions';
+import { createServer } from 'http';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { subscriptionManager } from './subscriptions';
 
 import schema from './schema';
 
-let PORT = config.port;
-if (process.env.PORT) {
-  PORT = parseInt(process.env.PORT, 10) + 100;
-}
-
-// const WS_PORT = process.env.WS_PORT || 8080;
+const PORT = config.port;
+const WS_PORT = config.webSocketPort;
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// setUpGitHubLogin(app);
+// TODO setUpGitHubLogin(app);
 
 app.use('/graphql', graphqlExpress((req) => {
   // Get the query, the same way express-graphql does it
@@ -75,7 +71,7 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => console.log(`API Server is now running on http://localhost:${PORT}`));
 
-/*
+
 // WebSocket server for subscriptions
 const websocketServer = createServer((request, response) => {
   response.writeHead(404);
@@ -93,20 +89,14 @@ new SubscriptionServer(
     // the obSubscribe function is called for every new subscription
     // and we use it to set the GraphQL context for this subscription
     onSubscribe: (msg, params) => {
-      const gitHubConnector = new GitHubConnector({
-        clientId: GITHUB_CLIENT_ID,
-        clientSecret: GITHUB_CLIENT_SECRET,
-      });
       return Object.assign({}, params, {
         context: {
-          Repositories: new Repositories({ connector: gitHubConnector }),
-          Users: new Users({ connector: gitHubConnector }),
-          Entries: new Entries(),
-          Comments: new Comments(),
+          Users: new Users(/*{ connector: ... }*/),
+          Messages: new Messages(),
+          Threads: new Threads(),
         },
       });
     },
   },
   websocketServer
 );
-*/
