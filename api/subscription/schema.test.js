@@ -7,7 +7,7 @@ import { assert } from 'chai';
 import casual from 'casual';
 import mocks from '../query/mocks'; // TODO: move mocks to a separate folder
 
-describe('Chat Mutation Schema', () => {
+describe('Chat Subscription Schema', () => {
   // Fill this in with the schema string
   const schemaString = `
   ${querySchema[0]}

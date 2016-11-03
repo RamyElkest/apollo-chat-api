@@ -6,7 +6,6 @@ export default class Users {
   constructor() {
     this.current = User.getUser().then((doc) => {
       this.username = doc.username;
-      console.log(doc);
       return doc;
     });
   }

@@ -73,12 +73,12 @@ app.listen(PORT, () => console.log(`API Server is now running on http://localhos
 
 
 // WebSocket server for subscriptions
-const websocketServer = createServer((request, response) => {
+const wsApp = createServer((request, response) => {
   response.writeHead(404);
   response.end();
 });
 
-websocketServer.listen(WS_PORT, () => console.log( // eslint-disable-line no-console
+wsApp.listen(WS_PORT, () => console.log( // eslint-disable-line no-console
   `Websocket Server is now running on http://localhost:${WS_PORT}`
 ));
 // eslint-disable-next-line
@@ -98,5 +98,5 @@ new SubscriptionServer(
       });
     },
   },
-  websocketServer
+  wsApp
 );
