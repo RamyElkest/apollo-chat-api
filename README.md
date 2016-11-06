@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/RamyElkest/apollo-chat-api.svg?branch=master)](https://travis-ci.org/RamyElkest/apollo-chat-api#)
-[![Coverage Status](https://coveralls.io/repos/github/RamyElkest/apollo-chat-api/badge.svg?branch=master)](https://coveralls.io/github/RamyElkest/apollo-chat-api)
+[![Coverage Status](https://coveralls.io/repos/github/RamyElkest/apollo-chat-api/badge.svg?branch=master&cacheBuster=1)](https://coveralls.io/github/RamyElkest/apollo-chat-api)
 [![Dependency Status](https://david-dm.org/ramyelkest/apollo-chat-api.svg)](https://david-dm.org/ramyelkest/apollo-chat-api)
 [![devDependency Status](https://david-dm.org/ramyelkest/apollo-chat-api/dev-status.svg)](https://david-dm.org/ramyelkest/apollo-chat-api#info=devDependencies)
 
