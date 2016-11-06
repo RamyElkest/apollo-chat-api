@@ -2,7 +2,7 @@
 import mongoose from 'mongoose';
 import { Connection, User, Thread, Message } from '../api/db/mongo';
 
-const threads = [
+export const threads = [
   {
     _id: mongoose.Types.ObjectId(),
     name: 'Jing and Me',
@@ -22,7 +22,7 @@ const threads = [
     lastUpdated: Date.now() - 39999,
   },
 ];
-const messages = [
+export const messages = [
   {
     threadId: threads[0]._id,
     postedBy: 'relkest',
@@ -66,7 +66,7 @@ const messages = [
     createdAt: Date.now() - 39999,
   },
 ];
-const users = [
+export const users = [
   {
     username: 'relkest',
     firstName: 'ramy',
@@ -75,9 +75,9 @@ const users = [
   },
 ];
 
-(function seed() {
-  console.log('starting to seed..');
-  Connection.then(() => {
+export function seed() {
+  // console.log('starting to seed..');
+  return Connection.then(() => {
     return new Promise((resolve, reject) => {
       mongoose.connection.db.dropDatabase((err, res) => {
         if (err) reject(err);
@@ -97,13 +97,12 @@ const users = [
       }),
     ]);
   }).then(() => {
-    return User.find().then((doc) => {
+    return User.find().exec().then((doc) => {
       if (doc.length) {
-        console.log('Database has been populated');
+        // console.log('Database has been populated');
       } else {
-        console.log('Database failed to populate');
+        // console.log('Database failed to populate');
       }
-      process.exit();
     });
   });
-}());
+}

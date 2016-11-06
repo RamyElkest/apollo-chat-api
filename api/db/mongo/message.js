@@ -9,7 +9,7 @@ const messageSchema = new mongoose.Schema({
 });
 
 messageSchema.statics.getByThreadId = function getByThreadId(id) {
-  return this.find({ threadId: id }).exec();
+  return this.find({ threadId: id }).sort('createdAt').exec();
 };
 
 export default mongoose.model('Message', messageSchema);

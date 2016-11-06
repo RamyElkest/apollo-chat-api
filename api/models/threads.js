@@ -6,7 +6,6 @@ export default class Threads {
   }
 
   getByIds(ids) {
-    console.log(ids);
     return Thread.getByIds(ids);
   }
 }

@@ -1,11 +1,13 @@
-/* eslint func-names:0 */
+/* eslint func-names:0 no-underscore-dangle:0 */
 
 import '..';
 import * as chai from 'chai';
 import chaiHttp from 'chai-http';
 import chaiAsPromised from 'chai-as-promised';
-import { Connection, User } from '../db';
+import { Connection } from '../db';
 import config from '../../config';
+import { users as mockUsers, threads as mockThreads, messages as mockMessages,
+         seed as resetDatabase } from '../../seeds/seeds';
 
 chai.use(chaiHttp);
 chai.use(chaiAsPromised);
@@ -21,7 +23,9 @@ describe('Query Integration Tests', () => {
     return Connection;
   });
 
-  describe('Query for user', () => {
+  beforeEach(() => resetDatabase());
+
+  describe('Test Query', () => {
     it('throws an error pass an empty query', () => {
       const testQuery = {
         query: '{}',
@@ -36,7 +40,7 @@ describe('Query Integration Tests', () => {
       });
     });
 
-    it('returns all the scalar values for a user', () => {
+    it('returns all threads and messages for the user', () => {
       const testQuery = {
         query: `
         {
@@ -44,30 +48,162 @@ describe('Query Integration Tests', () => {
             username
             firstName
             lastName
+            threads {
+              name
+              isRead
+              updatedAt
+              messages {
+                postedBy
+                content
+                createdAt
+              }
+            }
           }
         }`,
       };
 
-      const expected = {
-        username: 'relkest',
-        firstName: 'ramy',
-        lastName: 'elkest',
-      };
-
-      return new User(expected)
-      .save()
-      .then(() => {
-        return chai.request(server)
-                   .post('/graphql')
-                   .send(testQuery);
-      })
+      return chai.request(server)
+      .post('/graphql')
+      .send(testQuery)
       .then((res) => {
         assert.equal(res.status, 200);
-        assert.deepEqual(res.body.data.user, expected);
+        return Promise.resolve(res);
+      })
+      .then((res) => {
+        const actualUser = res.body.data.user;
+        const expectedUser = mockUsers[0];
+
+        assert.equal(actualUser.username, expectedUser.username);
+        assert.equal(actualUser.firstName, expectedUser.firstName);
+        assert.equal(actualUser.lastName, expectedUser.lastName);
+
+        return Promise.resolve(res);
+      })
+      .then((res) => {
+        const actualThreads = res.body.data.user.threads;
+        const expectedThreads = mockThreads;
+        actualThreads.forEach((actualThread, i) => {
+          assert.equal(actualThread.name, expectedThreads[i].name);
+          assert.equal(actualThread.isRead, false);
+          assert.isNumber(actualThread.updatedAt);
+
+          const actualMessages = actualThread.messages;
+          const expectedMessages = mockMessages
+                                  .filter(message => message.threadId === expectedThreads[i]._id)
+                                  .sort((a, b) => a.createdAt - b.createdAt);
+          actualMessages.forEach((actualMessage, j) => {
+            assert.equal(actualMessage.postedBy, expectedMessages[j].postedBy);
+            assert.equal(actualMessage.content, expectedMessages[j].content);
+            assert.isNumber(actualMessage.createdAt);
+          });
+        });
+
+        return Promise.resolve(res);
       });
     });
   });
 });
+
+describe('Mutation Integration Tests', () => {
+  before(function () {
+    this.timeout(10000); // might have to wait for the db to start
+    return Connection;
+  });
+
+  beforeEach(() => resetDatabase());
+
+  describe('Test addMessage Mutation', () => {
+    it('throws an error pass an empty query', () => {
+      const testQuery = {
+        query: 'mutation {}',
+      };
+
+      return chai.request(server)
+      .post('/graphql')
+      .send(testQuery)
+      .catch((err) => {
+        assert.equal(err.status, 400);
+        assert.ok(err.response.text.includes('Expected Name'));
+      });
+    });
+
+    it('adds a new message to the first thread then queries for it', () => {
+      let testQuery = {
+        query: `
+        {
+          user {
+            threads {
+              id
+              name
+            }
+          }
+        }`,
+      };
+
+      return chai.request(server)
+      .post('/graphql')
+      .send(testQuery)
+      .then((res) => {
+        assert.equal(res.status, 200);
+        assert.ok(res.body.data.user.threads[0].id);
+        return Promise.resolve(res.body.data.user.threads[0]);
+      })
+      .then((thread) => {
+        testQuery = {
+          query: `
+          mutation example {
+            addMessage(
+              id: "${thread.id}"
+              content:"I am the new message"
+            )
+            {
+              id
+              postedBy
+              content
+              createdAt
+            }
+          }`,
+        };
+
+        return chai.request(server)
+        .post('/graphql')
+        .send(testQuery)
+        .then((res) => {
+          assert.equal(res.status, 200);
+          assert.isString(res.body.data.addMessage.id);
+          assert.equal(res.body.data.addMessage.postedBy, 'relkest');
+          assert.equal(res.body.data.addMessage.content, 'I am the new message');
+          assert.isNumber(res.body.data.addMessage.createdAt);
+          return Promise.resolve(res.body.data.addMessage.id);
+        });
+      })
+      .then((messageId) => {
+        testQuery = {
+          query: `
+          {
+            user {
+              threads {
+                messages {
+                  id
+                }
+              }
+            }
+          }`,
+        };
+
+        return chai.request(server)
+        .post('/graphql')
+        .send(testQuery)
+        .then((res) => {
+          assert.equal(res.status, 200);
+          assert.equal(res.body.data.user.threads[0].messages.pop().id, messageId);
+          return Promise.resolve(res);
+        });
+      });
+    });
+  });
+});
+
 /*
 describe('SubscriptionManager', function() {
   const subManager = new SubscriptionManager({

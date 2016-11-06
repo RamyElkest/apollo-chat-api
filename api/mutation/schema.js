@@ -25,7 +25,6 @@ type Mutation {
 export const resolvers = {
   Mutation: {
     addMessage(root, { id, content }, context) {
-      console.log(context);
       if (!context.Users) {
         throw new Error('Must be logged in to add a message.');
       }
