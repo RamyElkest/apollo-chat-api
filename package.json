@@ -60,7 +60,7 @@
     "lodash": "4.16.4",
     "mocha-lcov-reporter": "1.2.0",
     "mongodb-runner": "3.4.0",
-    "mongoose": "^4.6.5",
+    "mongoose": "^4.7.1",
     "passport": "0.3.2",
     "passport-github": "1.1.0",
     "request-promise": "4.1.1",
