@@ -4,6 +4,12 @@ node_js:
   - "6"
   - "4"
 services: mongodb
+addons:
+  apt:
+    sources:
+    - mongodb-3.0-precise
+    packages:
+    - mongodb-org-server
 env:
   - MONGODB_VERSION=3.0.x MONGODB_TOPOLOGY=standalone
 script: npm run coveralls
