@@ -33,7 +33,7 @@
     "babel-preset-stage-2": "6.17.0",
     "babel-register": "6.18.0",
     "chai": "3.5.0",
-    "chai-as-promised": "6.0.0",
+    "chai-as-promised": "7.1.1",
     "chai-http": "3.0.0",
     "coveralls": "2.11.14",
     "eslint": "3.14.1",
