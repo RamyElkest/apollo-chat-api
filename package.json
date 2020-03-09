@@ -56,7 +56,7 @@
     "graphql-server-express": "^0.5.2",
     "graphql-subscriptions": "0.2.3",
     "graphql-tools": "0.8.0",
-    "is-mongodb-running": "0.0.1",
+    "is-mongodb-running": "1.0.2",
     "lodash": "4.17.3",
     "mocha-lcov-reporter": "1.2.0",
     "mongodb-runner": "3.4.0",
